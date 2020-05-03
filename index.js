@@ -1,11 +1,15 @@
 'use strict';
 const http = require('http');
+const router = require('./lib/router');
+
 const server = http.createServer((req, res) => {
-  res.writeHead(302, {
-    'Location': 'https://www.nnn.ed.nico/'
-  });
-  res.end();
+  router.route(req, res);
+}).on('error', (e) => {
+  console.error('Server Error', e);
+}).on('clientError', (e) => {
+  console.error('Client Error', e);
 });
+
 const port = 8000;
 server.listen(port, () => {
   console.info('Listening on ' + port);
